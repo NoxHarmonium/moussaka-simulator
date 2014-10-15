@@ -9,7 +9,6 @@ div.container {
 }
 
 div#renderer {
-    border: 1px solid #DDDDDD;
 }
 
 div#renderer, canvas {

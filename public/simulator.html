@@ -17,7 +17,19 @@
                     <p>This HTML document lets you test Moussaka without a device running Unity 3D. It was made for debugging Moussaka but can also be used as an example to write your own javascript game powered by Moussaka if you were that way inclined.</p>
                 </div>
             </div>
-
+            <h4 class="accordion-toggle toggled">
+                Game Simulation
+                <span class="toggleClose">-</span>
+                <span class="toggleOpen">+</span>
+            </h4>
+            <hr>
+            <div class="accordion-content default">
+                <div class="row">
+                    <div class="twelve columns">
+                        <div id="renderer"></div>
+                    </div>
+                </div>
+            </div>
 
             <h4 class="accordion-toggle toggled">
                 Controls
@@ -25,7 +37,7 @@
                 <span class="toggleOpen">+</span>
             </h4>
             <hr>
-            <div class="accordion-content default">
+            <div class="control-container accordion-content default">
                 <div class="row">
                     <div class="six columns">
                         <form>
@@ -48,7 +60,7 @@
                             <fieldset>
                                 <legend><h4>Advanced Options</h4></legend>
                                 <label for="txtServerUrl">Server URL</label>
-                                <input type="text" id="txtServerUrl" value=""/>
+                                <input type="text" id="txtServerUrl" value="http://localhost:3000/"/>
                                 <label for="txtPollInterval">Poll Interval</label>
                                 <input type="number" id="txtPollInterval" value="1000" min="1"/>
                             </fieldset>
@@ -77,19 +89,6 @@
                 </div>
             </div>
 
-            <h4 class="accordion-toggle toggled">
-                Game Simulation
-                <span class="toggleClose">-</span>
-                <span class="toggleOpen">+</span>
-            </h4>
-            <hr>
-            <div class="accordion-content default">
-                <div class="row">
-                    <div class="twelve columns">
-                        <div id="renderer"></div>
-                    </div>
-                </div>
-            </div>
 
         </div>
 

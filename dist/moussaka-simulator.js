@@ -554,6 +554,9 @@ var loadFormFromQueryVars = function () {
   simulator.client.projectVersion = $("#txtProjectVersion").val(urlVars.projectVersion || "");
   simulator.client.serverUrl = $("#txtServerUrl").val(urlVars.serverUrl || "http://localhost:3000/");
   simulator.client.pollInterval = $("#txtPollInterval").val(urlVars.pollInterval || 1000);
+  if (urlVars.connectNow) {
+    tryConnect();
+  }
 };
 var tryConnect = function () {
   simulator.client.deviceName = $("#txtDeviceName").val();
@@ -565,6 +568,7 @@ var tryConnect = function () {
   errorHelpEl.parent().addClass("hidden");
   errorHeadingEl.parent().addClass("hidden");
   simulator.client.connect();
+  $("control-container").slideUp("fast");
 };
 var onLoad = function ($) {
   errorHeadingEl = $("div#errorbox > h5");
@@ -578,6 +582,7 @@ var onLoad = function ($) {
     console.log("Connecting...");
     tryConnect();
   });
+  loadFormFromQueryVars();
 };
 $(document).ready(onLoad);
 module.exports = {};
