@@ -9,6 +9,8 @@
     grunt.loadNpmTasks('grunt-jsbeautifier');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-urequire');
+    grunt.loadNpmTasks('grunt-http-server');
+    grunt.loadNpmTasks('grunt-open');
 
     // Define config
     var config = {};
@@ -18,6 +20,24 @@
       src: ['lib/**/*.js'],
       dest: 'dist/<%= pkg.name %>.js',
       uglifyDest: 'dist/<%= pkg.name %>.min.js',
+    };
+
+    config['http-server'] = {
+        'dev': {
+            root: './',
+            port: 8282,
+            host: "127.0.0.1",
+            showDir : true,
+            autoIndex: true,
+            ext: "html",
+            runInBackground: false
+        }
+    };
+
+    config.open = {
+      dev : {
+        path: 'http://127.0.0.1:8282/public/simulator.html',
+      }
     };
 
     config.jsbeautifier = {
@@ -66,6 +86,7 @@
     grunt.registerTask('lint', ['jshint:all', 'jsbeautifier:all']);
     grunt.registerTask('compile', ['lint', 'urequire', 'uglify']);
     grunt.registerTask('default', ['compile']);
+    grunt.registerTask('serve', ['lint', 'compile', 'open:dev', 'http-server:dev']);
   };
 
 })(require, module);

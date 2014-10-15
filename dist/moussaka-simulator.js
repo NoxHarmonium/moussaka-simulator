@@ -519,7 +519,7 @@ define('errorHelp',['require','exports','module'],function (require, exports, mo
   
 
 "use strict";
-module.exports = { "Origin is not allowed by Access-Control-Allow-Origin": "" + "You cannot use the API by opening the HTML file locally. " + "You need to serve it from somewhere." };
+module.exports = { "Origin is not allowed by Access-Control-Allow-Origin": "" + "You cannot use the API by opening the HTML file locally. " + "You need to serve it from somewhere. " + "If you have grunt installed you run \"grunt serve\" from " + "the project root." };
 
 return module.exports;
 
@@ -539,7 +539,6 @@ simulator.client.on("error", function (err) {
   errorHeadingEl.parent().removeClass("hidden");
   errorEl.text(err.message);
   for (var msg in errorHelp) {
-    console.log(err.message, "===", msg);
     if (err.message.indexOf(msg) !== -1) {
       errorHelpEl.text(errorHelp[msg]);
       errorHelpEl.parent().removeClass("hidden");
