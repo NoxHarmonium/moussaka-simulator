@@ -1,0 +1,33 @@
+{
+  "name": "moussaka-simulator",
+  "version": "0.0.1",
+  "homepage": "https://github.com/NoxHarmonium/moussaka-simulator",
+  "authors": [
+    "Sean Dawson <contact@seandawson.info>"
+  ],
+  "description": "A browser utility that simulates a device for debugging the Moussaka prototyping framework.",
+  "main": "simulator.html",
+  "keywords": [
+    "moussaka",
+    "game",
+    "prototyping",
+    "simulator",
+    "development",
+    "tool"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+   "dependencies": {
+     "skeleton": "*",
+     "three.js": "*",
+     "jquery": "*",
+     "moussaka-client": "*"
+   }
+
+}
