@@ -441,19 +441,19 @@ define('three',[],function () {
   return (typeof THREE !== 'undefined') ? THREE : __nodeRequire('three')
 }
 });
-define('moussaka-client-js',[],function () {
+define('moussaka-client',[],function () {
   if (__isNode) {
-  return __nodeRequire('moussaka-client-js');
+  return __nodeRequire('moussaka-client');
 } else {
-  return (typeof MoussakaClient !== 'undefined') ? MoussakaClient : __nodeRequire('moussaka-client-js')
+  return (typeof MoussakaClient !== 'undefined') ? MoussakaClient : __nodeRequire('moussaka-client')
 }
 });
-define('simulator',['require', 'exports', 'module', 'three', 'moussaka-client-js'], function (require, exports, module) {
+define('simulator',['require', 'exports', 'module', 'three', 'moussaka-client'], function (require, exports, module) {
   
 
 "use strict";
 var THREE = require("three");
-var MoussakaClient = require("moussaka-client-js");
+var MoussakaClient = require("moussaka-client");
 var Simulator = function (opts) {
   this.client = new MoussakaClient(opts);
   this.rotateSpeed = this.client.registerVar("rotateSpeed", 0.05);
@@ -603,10 +603,10 @@ return module.exports;
     return require('index');
   };
 if (__isAMD) {
-  return define(['jquery', 'three', 'moussaka-client-js'], bundleFactory);
+  return define(['jquery', 'three', 'moussaka-client'], bundleFactory);
 } else {
     if (__isNode) {
-        return module.exports = bundleFactory(require('jquery'), require('three'), require('moussaka-client-js'));
+        return module.exports = bundleFactory(require('jquery'), require('three'), require('moussaka-client'));
     } else {
         return bundleFactory((typeof $ !== 'undefined') ? $ : void 0, (typeof THREE !== 'undefined') ? THREE : void 0, (typeof MoussakaClient !== 'undefined') ? MoussakaClient : void 0);
     }
