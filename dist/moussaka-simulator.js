@@ -515,18 +515,37 @@ module.exports.getUrlVars = function () {
 return module.exports;
 
 });
-define('dom',['require', 'exports', 'module', 'jquery', './simulator', './utils'], function (require, exports, module) {
+define('errorHelp',['require','exports','module'],function (require, exports, module) {
+  
+
+"use strict";
+module.exports = { "Origin is not allowed by Access-Control-Allow-Origin": "" + "You cannot use the API by opening the HTML file locally. " + "You need to serve it from somewhere." };
+
+return module.exports;
+
+});
+define('dom',['require', 'exports', 'module', 'jquery', './simulator', './utils', './errorHelp'], function (require, exports, module) {
   
 
 "use strict";
 var $ = require("jquery");
 var simulator = require("./simulator");
 var utils = require("./utils");
+var errorHelp = require("./errorHelp");
+var errorHeadingEl;
+var errorEl;
+var errorHelpEl;
 simulator.client.on("error", function (err) {
-  var errorHeadingEl = $("div#errorbox > h5");
-  errorHeadingEl.removeClass("hidden");
-  var errorEl = $("div#errorbox > p");
+  errorHeadingEl.parent().removeClass("hidden");
   errorEl.text(err.message);
+  for (var msg in errorHelp) {
+    console.log(err.message, "===", msg);
+    if (err.message.indexOf(msg) !== -1) {
+      errorHelpEl.text(errorHelp[msg]);
+      errorHelpEl.parent().removeClass("hidden");
+      break;
+    }
+  }
 });
 var loadFormFromQueryVars = function () {
   var urlVars = utils.getUrlVars();
@@ -544,9 +563,14 @@ var tryConnect = function () {
   simulator.client.projectVersion = $("#txtProjectVersion").val();
   simulator.client.serverUrl = $("#txtServerUrl").val();
   simulator.client.pollInterval = $("#txtPollInterval").val();
+  errorHelpEl.parent().addClass("hidden");
+  errorHeadingEl.parent().addClass("hidden");
   simulator.client.connect();
 };
-$(document).ready(function ($) {
+var onLoad = function ($) {
+  errorHeadingEl = $("div#errorbox > h5");
+  errorEl = $("div#errorbox > p");
+  errorHelpEl = $("div#errorhelp > p");
   $("div.container").find(".accordion-toggle").click(function () {
     $(this).toggleClass("toggled");
     $(this).nextUntil(".accordion-content").next().slideToggle("fast");
@@ -555,7 +579,8 @@ $(document).ready(function ($) {
     console.log("Connecting...");
     tryConnect();
   });
-});
+};
+$(document).ready(onLoad);
 module.exports = {};
 
 return module.exports;
