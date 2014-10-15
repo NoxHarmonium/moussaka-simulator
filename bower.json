@@ -6,7 +6,7 @@
     "Sean Dawson <contact@seandawson.info>"
   ],
   "description": "A browser utility that simulates a device for debugging the Moussaka prototyping framework.",
-  "main": "simulator.html",
+  "main": "public/simulator.html",
   "keywords": [
     "moussaka",
     "game",

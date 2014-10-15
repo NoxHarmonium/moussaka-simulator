@@ -3,9 +3,9 @@
     <head>
         <title>Moussaka Device Simulator</title>
         <meta charset="UTF-8"/>
-        <link rel="stylesheet" type="text/css" href="./bower_components/skeleton/stylesheets/base.css"/>
-        <link rel="stylesheet" type="text/css" href="./bower_components/skeleton/stylesheets/skeleton.css"/>
-        <link rel="stylesheet" type="text/css" href="./bower_components/skeleton/stylesheets/layout.css"/>
+        <link rel="stylesheet" type="text/css" href="../bower_components/skeleton/stylesheets/base.css"/>
+        <link rel="stylesheet" type="text/css" href="../bower_components/skeleton/stylesheets/skeleton.css"/>
+        <link rel="stylesheet" type="text/css" href="../bower_components/skeleton/stylesheets/layout.css"/>
         <link rel="stylesheet" type="text/css" href="./style.css"/>
     </head>
     <body>
@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="twelve columns">
                     <h1><img class="logo" src='./logo-s.png' alt="Moussaka Logo" /> Moussaka</h1>
-                    <h3>Moussaka Device Simulator</h3>
+                    <h3>Device Simulator</h3>
                     <p>This HTML document lets you test Moussaka without a device running Unity 3D. It was made for debugging Moussaka but can also be used as an example to write your own javascript game powered by Moussaka if you were that way inclined.</p>
                 </div>
             </div>
@@ -58,7 +58,7 @@
 
                 <div class="row">
                     <div class="twelve columns">
-                        <button onclick="exampleGame.tryConnect()">Connect</button>
+                        <button class="connect-button">Connect</button>
                     </div>
                 </div>
 
@@ -89,10 +89,10 @@
         </div>
 
         <!-- Dependencies: Make sure you run # bower install to fetch them -->
-        <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js" ></script>
-        <script type="text/javascript" src="./bower_components/three.js/three.js" ></script>
-        <script type="text/javascript" src="./bower_components/moussaka-client/dist/moussaka-client-js.js" ></script>
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js" ></script>
+        <script type="text/javascript" src="../bower_components/three.js/three.js" ></script>
+        <script type="text/javascript" src="../bower_components/moussaka-client/dist/moussaka-client-js.js" ></script>
         <!-- Main application -->
-        <script type="text/javascript" src="./simulator.js" ></script>
+        <script type="text/javascript" src="../dist/moussaka-simulator.js" ></script>
     </body>
 </html>
