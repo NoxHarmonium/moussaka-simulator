@@ -441,19 +441,19 @@ define('three',[],function () {
   return (typeof THREE !== 'undefined') ? THREE : __nodeRequire('three')
 }
 });
-define('moussaka-client',[],function () {
+define('moussaka-client-js',[],function () {
   if (__isNode) {
-  return __nodeRequire('moussaka-client');
+  return __nodeRequire('moussaka-client-js');
 } else {
-  return (typeof MoussakaClient !== 'undefined') ? MoussakaClient : __nodeRequire('moussaka-client')
+  return (typeof MoussakaClient !== 'undefined') ? MoussakaClient : __nodeRequire('moussaka-client-js')
 }
 });
-define('simulator',['require', 'exports', 'module', 'three', 'moussaka-client'], function (require, exports, module) {
+define('simulator',['require', 'exports', 'module', 'three', 'moussaka-client-js'], function (require, exports, module) {
   
 
 "use strict";
 var THREE = require("three");
-var MoussakaClient = require("moussaka-client");
+var MoussakaClient = require("moussaka-client-js");
 var Simulator = function (opts) {
   this.client = new MoussakaClient(opts);
   this.rotateSpeed = this.client.registerVar("rotateSpeed", 0.05);
@@ -535,7 +535,7 @@ var errorHelp = require("./errorHelp");
 var errorHeadingEl;
 var errorEl;
 var errorHelpEl;
-simulator.client.on("error", function (err) {
+var showError = function (err) {
   errorHeadingEl.parent().removeClass("hidden");
   errorEl.text(err.message);
   for (var msg in errorHelp) {
@@ -545,7 +545,7 @@ simulator.client.on("error", function (err) {
       break;
     }
   }
-});
+};
 var loadFormFromQueryVars = function () {
   var urlVars = utils.getUrlVars();
   simulator.client.deviceName = $("#txtDeviceName").val(urlVars.deviceName || "Test Device");
@@ -567,8 +567,19 @@ var tryConnect = function () {
   simulator.client.pollInterval = $("#txtPollInterval").val();
   errorHelpEl.parent().addClass("hidden");
   errorHeadingEl.parent().addClass("hidden");
-  simulator.client.connect();
+  try {
+    simulator.client.connect();
+  } catch (ex) {
+    showError(ex);
+  }
   $("control-container").slideUp("fast");
+};
+var tryDisconnect = function () {
+  try {
+    simulator.client.disconnect();
+  } catch (ex) {
+    showError(ex);
+  }
 };
 var onLoad = function ($) {
   errorHeadingEl = $("div#errorbox > h5");
@@ -582,9 +593,14 @@ var onLoad = function ($) {
     console.log("Connecting...");
     tryConnect();
   });
+  $(".disconnect-button").click(function () {
+    console.log("Disconnecting...");
+    tryDisconnect();
+  });
   loadFormFromQueryVars();
 };
 $(document).ready(onLoad);
+simulator.client.on("error", showError);
 module.exports = {};
 
 return module.exports;
@@ -603,10 +619,10 @@ return module.exports;
     return require('index');
   };
 if (__isAMD) {
-  return define(['jquery', 'three', 'moussaka-client'], bundleFactory);
+  return define(['jquery', 'three', 'moussaka-client-js'], bundleFactory);
 } else {
     if (__isNode) {
-        return module.exports = bundleFactory(require('jquery'), require('three'), require('moussaka-client'));
+        return module.exports = bundleFactory(require('jquery'), require('three'), require('moussaka-client-js'));
     } else {
         return bundleFactory((typeof $ !== 'undefined') ? $ : void 0, (typeof THREE !== 'undefined') ? THREE : void 0, (typeof MoussakaClient !== 'undefined') ? MoussakaClient : void 0);
     }
