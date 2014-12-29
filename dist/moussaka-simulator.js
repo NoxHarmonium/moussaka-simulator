@@ -457,6 +457,35 @@ var MoussakaClient = require("moussaka-client-js");
 var Simulator = function (opts) {
   this.client = new MoussakaClient(opts);
   this.rotateSpeed = this.client.registerVar("rotateSpeed", 0.05);
+  this.cubeShouldRotate = this.client.registerVar("cubeShouldRotate", true);
+  this.testText = this.client.registerVar("testText", "Change this test text");
+  this.prevTestText = null;
+  this.textMesh = null;
+};
+Simulator.prototype.generateText = function (text) {
+  if (this.textMesh) {
+    this.scene.remove(this.textMesh);
+    this.textMesh = null;
+  }
+  var text3d = new THREE.TextGeometry(text, {
+    size: 1,
+    height: 1,
+    curveSegments: 2,
+    font: "optimer",
+    weight: "normal"
+  });
+  text3d.computeBoundingBox();
+  var centerOffset = -0.5 * (text3d.boundingBox.max.x - text3d.boundingBox.min.x);
+  var textMaterial = new THREE.MeshBasicMaterial({
+    color: 16711680,
+    overdraw: 0.5
+  });
+  this.textMesh = new THREE.Mesh(text3d, textMaterial);
+  this.textMesh.position.x = centerOffset;
+  this.textMesh.position.y = -10;
+  this.textMesh.position.z = -20;
+  this.textMesh.rotation.z = Math.PI / 8;
+  this.scene.add(this.textMesh);
 };
 Simulator.prototype.startGame = function () {
   var canvasEl = document.querySelector("div#renderer");
@@ -475,8 +504,14 @@ Simulator.prototype.startGame = function () {
 Simulator.prototype.render = function () {
   window.requestAnimationFrame(this.render.bind(this));
   this.renderer.render(this.scene, this.camera);
-  this.cube.rotation.x += this.rotateSpeed.value;
-  this.cube.rotation.y += this.rotateSpeed.value;
+  if (this.cubeShouldRotate.value === true) {
+    this.cube.rotation.x += this.rotateSpeed.value;
+    this.cube.rotation.y += this.rotateSpeed.value;
+  }
+  if (this.prevTestText !== this.testText.value) {
+    this.generateText(this.testText.value);
+    this.prevTestText = this.testText.value;
+  }
 };
 var simulator = new Simulator({
   deviceName: "Moussaka Client Example",
