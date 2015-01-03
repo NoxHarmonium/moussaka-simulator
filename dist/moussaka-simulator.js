@@ -459,6 +459,7 @@ var Simulator = function (opts) {
   this.rotateSpeed = this.client.registerVar("rotateSpeed", 0.05);
   this.cubeShouldRotate = this.client.registerVar("cubeShouldRotate", true);
   this.testText = this.client.registerVar("testText", "Change this test text");
+  this.cubeColor = this.client.registerVar("cubeColor", new MoussakaClient.types.Color(0, 1, 0.5, 1));
   this.prevTestText = null;
   this.textMesh = null;
 };
@@ -508,6 +509,8 @@ Simulator.prototype.render = function () {
     this.cube.rotation.x += this.rotateSpeed.value;
     this.cube.rotation.y += this.rotateSpeed.value;
   }
+  var cubeColor = new THREE.Color(this.cubeColor.value.r, this.cubeColor.value.g, this.cubeColor.value.b);
+  this.cube.material.color = cubeColor;
   if (this.prevTestText !== this.testText.value) {
     this.generateText(this.testText.value);
     this.prevTestText = this.testText.value;
