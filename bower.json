@@ -24,7 +24,7 @@
     "tests"
   ],
    "dependencies": {
-     "skeleton": "*",
+     "skeleton": "v1.2",
      "three.js": "*",
      "jquery": "*",
      "moussaka-client": "*"
