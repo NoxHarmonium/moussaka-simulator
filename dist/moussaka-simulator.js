@@ -456,10 +456,19 @@ var THREE = require("three");
 var MoussakaClient = require("moussaka-client-js");
 var Simulator = function (opts) {
   this.client = new MoussakaClient(opts);
-  this.rotateSpeed = this.client.registerVar("rotateSpeed", 0.05);
-  this.cubeShouldRotate = this.client.registerVar("cubeShouldRotate", true);
-  this.testText = this.client.registerVar("testText", "Change this test text");
-  this.cubeColor = this.client.registerVar("cubeColor", new MoussakaClient.types.Color(0, 1, 0.5, 1));
+  this.rotateSpeed = this.client.registerVar("Rotate Speed", 0.05, {
+    min: 0,
+    max: 0.25
+  });
+  this.cubeShouldRotate = this.client.registerVar("Cube Should Rotate", true);
+  this.testText = this.client.registerVar("Test Text", "Change this test text");
+  this.cubeColor = this.client.registerVar("Cube Color", new MoussakaClient.types.Color(0, 255, 0, 255), { lockedValues: { a: true } });
+  this.cubePosition = this.client.registerVar("Cube Position", new MoussakaClient.types.Position(0, 0, 0), {
+    lockedValues: {
+      x: true,
+      z: true
+    }
+  });
   this.prevTestText = null;
   this.textMesh = null;
 };
@@ -509,7 +518,10 @@ Simulator.prototype.render = function () {
     this.cube.rotation.x += this.rotateSpeed.value;
     this.cube.rotation.y += this.rotateSpeed.value;
   }
-  var cubeColor = new THREE.Color(this.cubeColor.value.r, this.cubeColor.value.g, this.cubeColor.value.b);
+  this.cube.position.x = this.cubePosition.value.x;
+  this.cube.position.y = this.cubePosition.value.y;
+  this.cube.position.z = this.cubePosition.value.z;
+  var cubeColor = new THREE.Color(this.cubeColor.value.r / 255, this.cubeColor.value.g / 255, this.cubeColor.value.b / 255);
   this.cube.material.color = cubeColor;
   if (this.prevTestText !== this.testText.value) {
     this.generateText(this.testText.value);
